@@ -1,0 +1,33 @@
+title = "Terrific Rewards - One Shot description"
+
+[meta]
+description="""
+Based around the legendary Tarrasque, a town has grown wealthy because of its \
+(not-so) well kept secret: It has incapacitated and imprisoned the Tarrasque, \
+and the town has been harvesting things from the ever-regenerating body of \
+the tarrasque. Infinite wealth, strong weapons, stronger armor have been made \
+readily available to the town of Raskend. Governed by the near-god her \
+lordship Mia Derrith, the Town of Raskend has quietly prospered in the \
+Oneisian Empire, but not all believe the Prophetic words of her lordship \
+Derrith, and not all believe the Tarrasque should be imprisoned.\
+"""
+
+[4player]
+beginning-words="""
+You find yourselves in the Oneisian Empire. A great feat of \
+civilization in the larger Isles of Domnis. You need not know much about the \
+Isles of Domnis, save that the Oneisian Empire is the largest and oldest \
+empire.\n\
+You have heard rumors of a magnificent city deep in the windy steppes of the\
+continent, nestled between the twisting canyons and deep ravines of the torn \
+and ripped country-side. A city called Raskend.\n\
+The rumors have were not specific as to why this city has so much wealth to \
+give, but on the wings of the words: "Infinite wealth, incredible power" \
+etc. when a traveling caravan passes through assorted towns on its way to \
+Raskend, you have decided to go along with this caravan and find yourself \
+nearing this city.\n\
+A note to the players: you have been traveling with this caravan for a while \
+and so you have had some time to get to know some of the others you have been \
+traveling with. Whether you have been friendly and gotten to know more about \
+your fellow travelers is up to you.
+"""
