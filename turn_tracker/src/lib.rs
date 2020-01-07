@@ -18,6 +18,8 @@ impl Combat {
 }
 
 
+#[derive(Debug)]
+#[derive(PartialEq)]
 pub struct Character {
     pub name: String,
     pub initiative: u8,
@@ -50,7 +52,8 @@ impl Character {
     }
 }
 
-
+#[derive(Debug)]
+#[derive(PartialEq)]
 pub struct Effect {
     pub description: String,
     pub modifier: String,
@@ -172,14 +175,16 @@ mod tests {
 
     #[test]
     fn test_character_add_new_effect() -> Result<(), String> {
-        // TODO: Find someway to compare vectors
         let name: String = String::from("TEST_NAME");
         let mut character = Character::new(&name[..])?;
         let effect_vec = vec![String::from("Blinded"), String::from("-2 Perception"), String::from("3")];
+        let test1_effect = Effect::new(effect_vec.iter()).expect("Effect creation failed.");
+        let test2_effect = Effect::new(effect_vec.iter()).expect("Effect creation failed.");
 
-        assert_eq!(character.effects.len(), 0);
+        assert_eq!(character.effects, Vec::new());
         character.add_new_effect(&effect_vec).expect("Effect creation failed.");
-        assert_eq!(character.effects.len(), 1);
+        assert_eq!(character.effects, vec![test1_effect]);
+        assert_eq!(character.effects[0], test2_effect);
 
         Ok(())
     }
@@ -187,15 +192,17 @@ mod tests {
 
     #[test]
     fn test_character_add_effect() -> Result<(), String> {
-        // TODO: Find someway to compare vecotrs
         let name: String = String::from("TEST_NAME");
         let mut character = Character::new(&name[..])?;
         let effect_vec = vec![String::from("Blinded"), String::from("-2 Perception"), String::from("3")];
         let new_effect = Effect::new(effect_vec.iter()).expect("Effect creation failed.");
+        let test1_effect = Effect::new(effect_vec.iter()).expect("Effect creation failed.");
+        let test2_effect = Effect::new(effect_vec.iter()).expect("Effect creation failed.");
 
-        assert_eq!(character.effects.len(), 0);
+        assert_eq!(character.effects, Vec::new());
         character.add_effect(new_effect);
-        assert_eq!(character.effects.len(), 1);
+        assert_eq!(character.effects, vec![test1_effect]);
+        assert_eq!(character.effects[0], test2_effect);
 
         Ok(())
     }
@@ -206,8 +213,8 @@ mod tests {
         let new_combat = Combat::new();
 
         assert_eq!(new_combat.round, 0);
-        assert_eq!(new_combat.characters.len(), 0);
-        assert_eq!(new_combat.environ.len(), 0);
+        assert_eq!(new_combat.characters, Vec::new());
+        assert_eq!(new_combat.environ, Vec::new());
 
         Ok(())
     }
