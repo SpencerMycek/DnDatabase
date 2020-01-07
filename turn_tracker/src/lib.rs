@@ -1,5 +1,23 @@
 use std::error::Error;
 
+
+pub struct Combat {
+    pub round: u8,
+    pub characters: Vec<Character>,
+    pub environ: Vec<Effect>,
+}
+
+impl Combat {
+    pub fn new() -> Combat {
+        let round = 0;
+        let characters: Vec<Character> = Vec::new();
+        let environ: Vec<Effect> = Vec::new();
+
+        Combat { round, characters, environ }
+    }
+}
+
+
 pub struct Character {
     pub name: String,
     pub initiative: u8,
@@ -14,6 +32,22 @@ impl Character {
 
         Ok(Character { name, initiative, effects })
     }
+
+    pub fn change_init(&mut self, new_init: u8) {
+        self.initiative = new_init;
+    }
+
+    pub fn add_new_effect(&mut self, effect_vec: &Vec<String>) -> Result<(), String> {
+        let new_effect = Effect::new(effect_vec.iter())?;
+
+        self.effects.push(new_effect);
+
+        Ok(())
+    }
+
+    pub fn add_effect(&mut self, effect: Effect) {
+        self.effects.push(effect);
+    }
 }
 
 
@@ -22,6 +56,7 @@ pub struct Effect {
     pub modifier: String,
     pub duration: u8,
 }
+
 
 impl Effect {
     pub fn new(mut effect_iter: std::slice::Iter<String>) -> Result<Effect, &'static str> {
@@ -45,7 +80,12 @@ impl Effect {
 
         Ok(Effect { description, modifier, duration })
     }
+
+    pub fn decrement_duration(&mut self) {
+        self.duration = self.duration - 1;
+    }
 }
+
 
 pub fn run() -> Result<(), Box<dyn Error>> {
     println!("Hello, World!");
@@ -87,7 +127,24 @@ mod tests {
             .expect("Effect creation failed");
     }
 
+
     #[test]
+    fn test_effect_decrement_duration() -> Result<(), String> {
+        let description: String = String::from("Blinded");
+        let modifier: String = String::from("-2 Perception");
+        let duration: String = String::from("3");
+        let effect_vec = vec![description, modifier, duration];
+
+        let mut test_effect = Effect::new(effect_vec.iter())?;
+
+        assert_eq!(test_effect.duration, 3);
+        test_effect.decrement_duration();
+        assert_eq!(test_effect.duration, 2);
+
+        Ok(())
+    }
+
+
     #[test]
     fn test_new_character() -> Result<(), String> {
         let name: String = String::from("TEST_NAME");
@@ -98,6 +155,62 @@ mod tests {
 
         Ok(())
     }
-        
+
+
+    #[test]
+    fn test_character_change_init() -> Result<(), String> {
+        let name: String = String::from("TEST_NAME");
+        let mut character = Character::new(&name[..])?;
+
+        assert_eq!(character.initiative, 0);
+        character.change_init(16);
+        assert_eq!(character.initiative, 16);
+
+        Ok(())
+    }
+
+
+    #[test]
+    fn test_character_add_new_effect() -> Result<(), String> {
+        // TODO: Find someway to compare vectors
+        let name: String = String::from("TEST_NAME");
+        let mut character = Character::new(&name[..])?;
+        let effect_vec = vec![String::from("Blinded"), String::from("-2 Perception"), String::from("3")];
+
+        assert_eq!(character.effects.len(), 0);
+        character.add_new_effect(&effect_vec).expect("Effect creation failed.");
+        assert_eq!(character.effects.len(), 1);
+
+        Ok(())
+    }
+    
+
+    #[test]
+    fn test_character_add_effect() -> Result<(), String> {
+        // TODO: Find someway to compare vecotrs
+        let name: String = String::from("TEST_NAME");
+        let mut character = Character::new(&name[..])?;
+        let effect_vec = vec![String::from("Blinded"), String::from("-2 Perception"), String::from("3")];
+        let new_effect = Effect::new(effect_vec.iter()).expect("Effect creation failed.");
+
+        assert_eq!(character.effects.len(), 0);
+        character.add_effect(new_effect);
+        assert_eq!(character.effects.len(), 1);
+
+        Ok(())
+    }
+     
+    
+    #[test]
+    fn test_new_combat() -> Result<(), String> {
+        let new_combat = Combat::new();
+
+        assert_eq!(new_combat.round, 0);
+        assert_eq!(new_combat.characters.len(), 0);
+        assert_eq!(new_combat.environ.len(), 0);
+
+        Ok(())
+    }
+    
 }
 
