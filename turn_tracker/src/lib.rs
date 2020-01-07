@@ -130,6 +130,38 @@ mod tests {
             .expect("Effect creation failed");
     }
 
+    #[test]
+    #[should_panic]
+    fn test_effect_no_description() {
+        let effect_vec: Vec<String> = Vec::new();
+
+        Effect::new(effect_vec.iter())
+            .expect("Effect creation failed");
+    }
+
+
+    #[test]
+    #[should_panic]
+    fn test_effect_no_modifier() {
+        let description: String = String::from("Blinded");
+        let effect_vec: Vec<String> = vec![description];
+
+        Effect::new(effect_vec.iter())
+            .expect("Effect creation failed");
+    }
+
+
+    #[test]
+    #[should_panic]
+    fn test_effect_no_duration() {
+        let description: String = String::from("Blinded");
+        let modifier: String = String::from("-2 Perception");
+        let effect_vec: Vec<String> = vec![description, modifier];
+
+        Effect::new(effect_vec.iter())
+            .expect("Effect creation failed");
+    }
+
 
     #[test]
     fn test_effect_decrement_duration() -> Result<(), String> {
