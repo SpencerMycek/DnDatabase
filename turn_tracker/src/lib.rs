@@ -1,6 +1,7 @@
 use std::error::Error;
 
 
+#[derive(Debug)]
 pub struct Combat {
     pub round: u8,
     pub characters: Vec<Character>,
@@ -14,6 +15,14 @@ impl Combat {
         let environ: Vec<Effect> = Vec::new();
 
         Combat { round, characters, environ }
+    }
+
+    pub fn add_environ(&mut self, effect: Effect) {
+        self.environ.push(effect);
+    }
+
+    pub fn add_char(&mut self, new_char: Character) {
+        self.characters.push(new_char);
     }
 }
 
@@ -92,6 +101,30 @@ impl Effect {
 
 pub fn run() -> Result<(), Box<dyn Error>> {
     println!("Hello, World!");
+
+    let mut combat = Combat::new();
+
+    let mut char_bob = Character::new("Bob")?;
+
+    let mut char_jim = Character::new("Jim")?;
+
+    let test_effect = Effect::new(
+        vec![
+            String::from("Blinded"),
+            String::from("Perception -2"),
+            String::from("2")
+        ].iter()
+    )?;
+
+    println!("{:?},\n{:?} {:?},\n{:?}", combat, char_bob, char_jim, test_effect);
+
+    println!("{:?}", combat);
+
+    combat.add_char(char_bob);
+    char_jim.add_effect(test_effect);
+    combat.add_char(char_jim);
+
+    println!("{:?}", combat);
 
     Ok(())
 }
@@ -250,6 +283,35 @@ mod tests {
 
         Ok(())
     }
+
     
+    #[test]
+    fn test_combat_add_effect_environ() -> Result<(), String> {
+        let mut new_combat = Combat::new();
+        let description: String = String::from("Blinded");
+        let modifier: String = String::from("-2 Perception");
+        let duration: String = String::from("3");
+        let effect_vec = vec![description, modifier, duration];
+        let test_effect = Effect::new(effect_vec.iter())?;
+
+        new_combat.add_environ(test_effect);
+
+        assert_eq!(new_combat.environ, vec![ Effect::new(effect_vec.iter())? ]);
+
+        Ok(())
+    }
+
+    
+    #[test]
+    fn test_combat_add_character() -> Result<(), String> {
+        let mut new_combat = Combat::new();
+        let test_char = Character::new("TEST")?;
+
+        new_combat.add_char(test_char);
+
+        assert_eq!(new_combat.characters, vec![Character::new("TEST")?]);
+
+        Ok(())
+    }   
 }
 
