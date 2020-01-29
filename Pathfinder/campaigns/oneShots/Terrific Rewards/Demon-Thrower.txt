@@ -1,0 +1,70 @@
+﻿Daevic Devil Character
+
+Race: Devil (Custom) 18rp
+(I used to rp to get somethings to make devil template less good)
+Type: Outsider (3rp)
+Size: Medium (0rp)
+Speed: Normal (0rp)
+Ability: Greater Paragon (+4 Cha, -2 Int, -2 Dex) (2rp)
+Language: Standard (0rp)
+Racial Traits:
+	Fiendish Resistance (3rp)
+	Gifted Linguist (2rp)
++2 Ling, +1 language per rank
+	Silver Tongued (3rp)
++2 Diplo Bluff
+	Weapon Familiarity (1rp)
+2 weapons, proficient
+	See in Darkness (4rp)
+Devil Template (+1cr):
+	Immune Fire/Poison
+	Res acid/cold 10
+	See in Darkness
+	Telepathy 100ft
+	Celestial, Draconic, Infernal
+	Devil’s weapons are lawful and evil
+
+Ability Scores:
+Str: 15
+Dex: 7
+Con: 14
+Int: 14
+Wis: 7
+Cha: 20
+
+Class: Lvl 7 Daevic
+Saves: 7/5/2
+BaB: +7
+Veils: 2+2 DC: 10+Cha+Essence Invested
+Essence: 3
+Chakra Binds: Feet, Hands, Wrists
+Veil Choices: 2 Daevic, 2 Passion
+	Passion:
+		Lover’s Tread
+		Courtesan’s Cloak
+	Daevic:
+		Armory of the Conquerer
+	
+		Essence of the Succubus	
+Passion: Desire
+Resist Influence +1
+
+Feats:
+(1) Point Blank Shot
+(Drawback) Startoss Style
+(3) Startoss Comet
+(Desire – 3) Precise Shot, Willful Throw
+(5) Startoss Shower
+(7) Extra Essence
+
+Traits:
+	(1)
+	(2)
+	(3)
+	(4)
+	(D1)
+	(D2)
+	(MD)
+
+Passion Aspect:
+	Avarice
