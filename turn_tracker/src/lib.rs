@@ -23,12 +23,23 @@ impl Combat {
 
     pub fn add_char(&mut self, new_char: Character) {
         self.characters.push(new_char);
+        self.characters.sort_by(|a, b| b.initiative.cmp(&a.initiative));
+    }
+
+    pub fn next_round(&mut self) {
+        self.round += 1;
+        for character in &mut self.characters {
+            character.new_round();
+        }
+        for effect in &mut self.environ {
+            effect.decrement_duration();
+        }
+        self.environ.retain(|x| x.duration != 0);
     }
 }
 
 
-#[derive(Debug)]
-#[derive(PartialEq)]
+#[derive(Debug, PartialEq)]
 pub struct Character {
     pub name: String,
     pub initiative: u8,
@@ -36,9 +47,9 @@ pub struct Character {
 }
 
 impl Character {
-    pub fn new(name: &str) -> Result<Character, &'static str> {
+    pub fn new(name: &str, init: u8) -> Result<Character, &'static str> {
         let name: String = name.to_string();
-        let initiative = 0;
+        let initiative = init;
         let effects: Vec<Effect> = Vec::new();
 
         Ok(Character { name, initiative, effects })
@@ -59,10 +70,21 @@ impl Character {
     pub fn add_effect(&mut self, effect: Effect) {
         self.effects.push(effect);
     }
+
+    pub fn rm_old_effects(&mut self) {
+        self.effects.retain(|x| x.duration != 0)
+
+    }
+
+    pub fn new_round(&mut self) {
+        for effect in &mut self.effects {
+            effect.decrement_duration()
+        }
+        self.rm_old_effects();
+    }
 }
 
-#[derive(Debug)]
-#[derive(PartialEq)]
+#[derive(Debug, PartialEq)]
 pub struct Effect {
     pub description: String,
     pub modifier: String,
@@ -104,9 +126,9 @@ pub fn run() -> Result<(), Box<dyn Error>> {
 
     let mut combat = Combat::new();
 
-    let mut char_bob = Character::new("Bob")?;
+    let char_bob = Character::new("Bob", 11)?;
 
-    let mut char_jim = Character::new("Jim")?;
+    let mut char_jim = Character::new("Jim", 12)?;
 
     let test_effect = Effect::new(
         vec![
@@ -124,6 +146,11 @@ pub fn run() -> Result<(), Box<dyn Error>> {
     char_jim.add_effect(test_effect);
     combat.add_char(char_jim);
 
+    println!("{:?}", combat);
+
+    combat.next_round();
+    println!("{:?}", combat);
+    combat.next_round();
     println!("{:?}", combat);
 
     Ok(())
@@ -217,9 +244,10 @@ mod tests {
     fn test_new_character() -> Result<(), String> {
         let name: String = String::from("TEST_NAME");
 
-        let new_char = Character::new(&name[..])?;
+        let new_char = Character::new(&name[..], 10)?;
 
         assert_eq!(new_char.name, name);
+        assert_eq!(new_char.initiative, 10);
 
         Ok(())
     }
@@ -228,9 +256,9 @@ mod tests {
     #[test]
     fn test_character_change_init() -> Result<(), String> {
         let name: String = String::from("TEST_NAME");
-        let mut character = Character::new(&name[..])?;
+        let mut character = Character::new(&name[..], 10)?;
 
-        assert_eq!(character.initiative, 0);
+        assert_eq!(character.initiative, 10);
         character.change_init(16);
         assert_eq!(character.initiative, 16);
 
@@ -241,7 +269,7 @@ mod tests {
     #[test]
     fn test_character_add_new_effect() -> Result<(), String> {
         let name: String = String::from("TEST_NAME");
-        let mut character = Character::new(&name[..])?;
+        let mut character = Character::new(&name[..], 10)?;
         let effect_vec = vec![String::from("Blinded"), String::from("-2 Perception"), String::from("3")];
         let test1_effect = Effect::new(effect_vec.iter()).expect("Effect creation failed.");
         let test2_effect = Effect::new(effect_vec.iter()).expect("Effect creation failed.");
@@ -258,7 +286,7 @@ mod tests {
     #[test]
     fn test_character_add_effect() -> Result<(), String> {
         let name: String = String::from("TEST_NAME");
-        let mut character = Character::new(&name[..])?;
+        let mut character = Character::new(&name[..], 10)?;
         let effect_vec = vec![String::from("Blinded"), String::from("-2 Perception"), String::from("3")];
         let new_effect = Effect::new(effect_vec.iter()).expect("Effect creation failed.");
         let test1_effect = Effect::new(effect_vec.iter()).expect("Effect creation failed.");
@@ -270,6 +298,37 @@ mod tests {
         assert_eq!(character.effects[0], test2_effect);
 
         Ok(())
+    }
+
+    #[test]
+    fn test_character_rm_old() -> Result<(), String> {
+        let mut character = Character::new("TEST", 10)?;
+        let effect_vec = vec![String::from("Blinded"), String::from("-2 Perception"), String::from("0")];
+        let new_effect = Effect::new(effect_vec.iter()).expect("Effect creation failed.");
+
+        character.add_effect(new_effect);
+        assert_ne!(character.effects, Vec::new());
+        character.rm_old_effects();
+        assert_eq!(character.effects, Vec::new());
+
+        Ok(())
+    }
+
+
+    #[test]
+    fn test_character_new_round() -> Result<(), String> {
+        let mut character = Character::new("TEST", 10)?;
+        let effect_vec = vec![String::from("Blinded"), String::from("-2 Perception"), String::from("2")];
+        let new_effect = Effect::new(effect_vec.iter()).expect("Effect creation failed.");
+
+        character.add_effect(new_effect);
+        character.new_round();
+        assert_ne!(character.effects, Vec::new());
+        character.new_round();
+        assert_eq!(character.effects, Vec::new());
+
+        Ok(())
+        
     }
      
     
@@ -305,13 +364,36 @@ mod tests {
     #[test]
     fn test_combat_add_character() -> Result<(), String> {
         let mut new_combat = Combat::new();
-        let test_char = Character::new("TEST")?;
+        let test_char = Character::new("TEST", 10)?;
 
         new_combat.add_char(test_char);
 
-        assert_eq!(new_combat.characters, vec![Character::new("TEST")?]);
+        assert_eq!(new_combat.characters, vec![Character::new("TEST", 10)?]);
 
         Ok(())
-    }   
+    }
+
+
+    #[test]
+    fn test_combat_next_round() -> Result<(), String> {
+        let mut new_combat = Combat::new();
+        let mut test_char = Character::new("TEST", 10)?;
+        let effect_vec = vec![String::from("Blinded"), String::from("-2 Perception"), String::from("1")];
+        let effect1 = Effect::new(effect_vec.iter()).expect("Effect creation failed.");
+        let effect2 = Effect::new(effect_vec.iter()).expect("Effect creation failed.");
+        test_char.add_effect(effect1);
+        
+        new_combat.add_environ(effect2);
+        new_combat.add_char(test_char);
+
+        new_combat.next_round();
+        for i in new_combat.characters {
+            assert_eq!(i.effects, Vec::new());
+        }
+        assert_eq!(new_combat.environ, Vec::new());
+        assert_eq!(new_combat.round, 1);
+
+        Ok(())
+    }
 }
 
