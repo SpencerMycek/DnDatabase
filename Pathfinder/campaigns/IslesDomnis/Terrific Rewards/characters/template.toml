@@ -1,0 +1,76 @@
+title = "Pathfinder Character Template"
+
+[owner]
+name = "Spencer Mycek"
+email = "Spence.Mycek@gmail.com"
+
+[meta]
+name = ""
+player = ""
+class = [["", ""], ["", ""]]
+homeland = ""
+race = ""
+gender = ""
+height = ""
+weight = ""
+hair = ""
+eyes = ""
+
+[stats]
+[stats.ability]
+# Score, Bonus, Temp Increase, Total Bonus
+str = [10, 0, 0, 0]
+dex = [10, 0, 0, 0]
+con = [10, 0, 0, 0]
+int = [10, 0, 0, 0]
+wis = [10, 0, 0, 0]
+cha = [10, 0, 0, 0]
+
+[stats.saves]
+# Total, Base, Score, Magic, Misc
+fort = [0, 0, 0, 0, 0]
+refl = [0, 0, 0, 0, 0]
+will = [0, 0, 0, 0, 0]
+
+[stats.speed]
+land = 30
+fly = 0
+swim = 0
+climb = 0
+burrow = 0
+
+[stats.skills]
+[stats.skills.languages]
+[stats.prof]
+
+[stats.combat]
+hp = 0
+init = 0
+bab = 0
+cmb = 0
+cmd = 0
+sr = ""
+
+[stats.combat.ac]
+ac = 10
+touch = 10
+flat = 10
+
+weapons
+
+inventory
+wealth
+carry
+
+spell known
+caster level
+spells per day/slots
+spells
+
+feats
+trait
+drawback
+abilities
+class_abilities
+
+

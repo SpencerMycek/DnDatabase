@@ -1,4 +1,8 @@
+extern crate cursive;
+
 use std::error::Error;
+use cursive::Cursive;
+use cursive::views::TextView;
 
 
 #[derive(Debug)]
@@ -122,36 +126,13 @@ impl Effect {
 
 
 pub fn run() -> Result<(), Box<dyn Error>> {
-    println!("Hello, World!");
+    let mut siv = Cursive::default();
 
-    let mut combat = Combat::new();
+    siv.add_global_callback('q', |s| s.quit());
 
-    let char_bob = Character::new("Bob", 11)?;
+    siv.add_layer(TextView::new("Hello, Cursive! press <q> to quit"));
 
-    let mut char_jim = Character::new("Jim", 12)?;
-
-    let test_effect = Effect::new(
-        vec![
-            String::from("Blinded"),
-            String::from("Perception -2"),
-            String::from("2")
-        ].iter()
-    )?;
-
-    println!("{:?},\n{:?} {:?},\n{:?}", combat, char_bob, char_jim, test_effect);
-
-    println!("{:?}", combat);
-
-    combat.add_char(char_bob);
-    char_jim.add_effect(test_effect);
-    combat.add_char(char_jim);
-
-    println!("{:?}", combat);
-
-    combat.next_round();
-    println!("{:?}", combat);
-    combat.next_round();
-    println!("{:?}", combat);
+    siv.run();
 
     Ok(())
 }
