@@ -1,0 +1,117 @@
+title = "Pathfinder Character Template"
+
+[owner]
+name = "Spencer Mycek"
+email = "Spence.Mycek@gmail.com"
+
+[meta]
+    name = "Mia Derrith"
+    player = "DM"
+    class = [["Mesmerist - Autohypnotist", 20]
+    homeland = "Raskend"
+    race = "Kitsune"
+    type = ["Humanoid", "Shapeshifter"]
+    gender = "Female"
+    age = "Venerable"
+    height = ""
+    weight = ""
+    hair = "Brown"
+    eyes = "Amber"
+
+[stats]
+    [stats.ability]
+        # Score, Bonus, Temp Increase, Total Bonus
+        str = [10, 0, 0, 0]
+        dex = [14, 2, 0, 0]
+        con = [12, 1, 0, 0]
+        int = [24, 7, 0, 0]
+        wis = [19, 4, 0, 0]
+        cha = [66, 28, 0, 0]
+
+    [stats.saves]
+        # Total, Base, Score, Magic, Misc
+        fort = [7, 6, 1, 0, 0]
+        refl = [14, 12, 2, 0, 0]
+        will = [44, 12, 4, 0, 28]
+
+    [stats.speed]
+        land = 30
+        fly = 0
+        swim = 0
+        climb = 0
+        burrow = 0
+
+    [stats.skills]
+        rpl = 6
+        ranks = 260
+        # Name, ranks 
+        skills = [""]
+    [stats.skills.languages]
+        languages = [""]
+    [stats.prof]
+        proficienies = [""]
+
+    [stats.combat]
+        hp = 123
+        init = 2
+        bab = 15
+        cmb = 0
+        cmd = 0
+        sr = ""
+
+    [stats.combat.ac]
+        ac = 10
+        touch = 10
+        flat = 10
+
+    [stats.weapons]
+        [stats.weapons.1]
+            name = ""
+            damage = ""
+            range = ""
+            crit = ["20", "2x"]
+            type = [""]
+
+[inventory]
+    items = [
+        "Headband of Mental Superiority +6 (Stealth, Perception, Sense Motive)",
+        "Belt of Physical Perfection +6",
+        "Mesmerizing Tattoo"
+    ]
+
+    [inventory.wealth]
+        gp=0
+        sp=0
+
+    [inventory.carry]
+        heavy=100
+        medium=66
+        light=33
+
+[spells]
+    known = 0
+    level = 0
+    slots = 0
+    spells = [""]
+
+[feats]
+    1=""
+    2=""
+    
+    [feats.traits]
+    social=""
+    combat=""
+    magic=""
+
+    [feats.drawbacks]
+    major=""
+    1=""
+    2=""
+
+[abilities]
+    abilities=[""]
+    
+    [abilities.class]
+    class=[""]
+
+

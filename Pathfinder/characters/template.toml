@@ -1,0 +1,113 @@
+title = "Pathfinder Character Template"
+
+[owner]
+name = "Spencer Mycek"
+email = "Spence.Mycek@gmail.com"
+
+[meta]
+    name = ""
+    player = ""
+    class = [["", ""], ["", ""]]
+    homeland = ""
+    race = ""
+    type = [""]
+    gender = ""
+    age =""
+    height = ""
+    weight = ""
+    hair = ""
+    eyes = ""
+
+[stats]
+    [stats.ability]
+        # Score, Bonus, Temp Increase, Total Bonus
+        str = [10, 0, 0, 0]
+        dex = [10, 0, 0, 0]
+        con = [10, 0, 0, 0]
+        int = [10, 0, 0, 0]
+        wis = [10, 0, 0, 0]
+        cha = [10, 0, 0, 0]
+
+    [stats.saves]
+        # Total, Base, Score, Magic, Misc
+        fort = [0, 0, 0, 0, 0]
+        refl = [0, 0, 0, 0, 0]
+        will = [0, 0, 0, 0, 0]
+
+    [stats.speed]
+        land = 30
+        fly = 0
+        swim = 0
+        climb = 0
+        burrow = 0
+
+    [stats.skills]
+        rpl = 0
+        ranks = 0
+        # Name, ranks 
+        skills = [""]
+    [stats.skills.languages]
+        languages = [""]
+    [stats.prof]
+        proficienies = [""]
+
+    [stats.combat]
+        hp = 0
+        init = 0
+        bab = 0
+        cmb = 0
+        cmd = 0
+        sr = ""
+
+    [stats.combat.ac]
+        ac = 10
+        touch = 10
+        flat = 10
+
+    [stats.weapons]
+        [stats.weapons.1]
+            name = ""
+            damage = ""
+            range = ""
+            crit = ["20", "2x"]
+            type = [""]
+
+[inventory]
+    items = [""]
+
+    [inventory.wealth]
+        gp=0
+        sp=0
+
+    [inventory.carry]
+        heavy=100
+        medium=66
+        light=33
+
+[spells]
+    known = 0
+    level = 0
+    slots = 0
+    spells = [""]
+
+[feats]
+    1=""
+    2=""
+    
+    [feats.traits]
+    social=""
+    combat=""
+    magic=""
+
+    [feats.drawbacks]
+    major=""
+    1=""
+    2=""
+
+[abilities]
+    abilities=[""]
+    
+    [abilities.class]
+    class=[""]
+
+
