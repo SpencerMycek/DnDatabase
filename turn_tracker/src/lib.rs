@@ -1,8 +1,10 @@
 extern crate cursive;
 
 use std::error::Error;
+
 use cursive::Cursive;
-use cursive::views::TextView;
+use cursive::views::Dialog;
+use cursive::traits::With as _;
 
 
 #[derive(Debug)]
@@ -128,13 +130,40 @@ impl Effect {
 pub fn run() -> Result<(), Box<dyn Error>> {
     let mut siv = Cursive::default();
 
+    #[cfg(feature = "toml")] {
+        siv.set_theme(cursive::theme::Theme::default().with(|theme| {
+            use cursive::theme::{BaseColor::*, Color::*, PaletteColor::*};
+            theme.palette[Background] = TerminalDefault;
+            theme.palette[Primary] = Dark(Black);
+            theme.palette[Secondary] = Rgb(255, 127, 42);
+        }));
+    }
+
     siv.add_global_callback('q', |s| s.quit());
 
-    siv.add_layer(TextView::new("Hello, Cursive! press <q> to quit"));
+    siv.add_layer(Dialog::text("This is a survey!\nPress <Next> when you're ready.")
+                  .title("Important Survey")
+                  .button("Next", show_next));
 
     siv.run();
 
     Ok(())
+}
+
+fn show_next(s: &mut Cursive) {
+    s.pop_layer();
+    s.add_layer(Dialog::text("Did you do the thing?")
+                .title("Question 1")
+                .button("Yes!", |s| show_answer(s, "I knew it! Well done!"))
+                .button("No!", |s| show_answer(s, "I knew you couldn't be trusted"))
+                .button("Uh?", |s| s.add_layer(Dialog::info("Try again!"))));
+}
+
+fn show_answer(s: &mut Cursive, msg: &str) {
+    s.pop_layer();
+    s.add_layer(Dialog::text(msg)
+                .title("Results")
+                .button("Finish", |s| s.quit()));
 }
 
 
